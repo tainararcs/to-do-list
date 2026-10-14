@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "strict": true,
+    // Diz ao TypeScript para resolver os imports seguindo a lógica do Vite
+    "moduleResolution": "Bundler",
+    // Permite escrever JSX/TSX
+    "jsx": "react-jsx",
+    // O TypeScript verifica o código e quem empacota a aplicação é o Vite
+    "noEmit": true
+  },
+  // Informa ao TypeScript onde procurar os arquivos .tsx
+  "include": ["src"]
+}
