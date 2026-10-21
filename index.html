@@ -16,8 +16,9 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/service-worker.js')
-                        .then(reg => console.log('Service Worker registrado!', reg))
+                    // Usando './' para que ele herde a pasta 'to-do-list' do GitHub Pages
+                    navigator.serviceWorker.register('./service-worker.js')
+                        .then(reg => console.log('Service Worker registrado com sucesso!', reg))
                         .catch(err => console.error('Erro no SW:', err));
                 });
             }
