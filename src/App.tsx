@@ -32,6 +32,8 @@ export function App() {
         <>
             <h1>To-Do List</h1>
 
+            <span id="status"></span>
+
             <form onSubmit={addTask}>
                 <input type="text" placeholder="Crie uma task" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
                 <button type="submit">Adicionar</button>

@@ -1,0 +1,22 @@
+{
+    "name": "Minha To-Do List",
+    "short_name": "Minhas Tarefas",
+    "description": "Organize suas tarefas diárias de forma simples.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#f5f5f5",
+    "theme_color": "#2563eb",
+    "icons": [
+        {
+            "src": "./icons/icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
