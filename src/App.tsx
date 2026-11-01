@@ -5,9 +5,12 @@ import { Summary } from "./Summary";
 
 const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]") as Task[];;
 
+type Filter = "all" | "completed" | "pending";
+
 export function App() {
     const [tasks, setTasks] = useState<Task[]>(storedTasks);
     const [inputTask, setInputTask] = useState("");
+    const [filter, setFilter] = useState<Filter>("all");
 
     useEffect(() => {localStorage.setItem("tasks", JSON.stringify(tasks))}, [tasks]);
 
@@ -28,6 +31,13 @@ export function App() {
         ));
     }
 
+    const filteredTasks = tasks.filter(task => {
+        if (filter === "completed") return task.checked;
+        if (filter === "pending") return !task.checked;
+
+        return true;
+    });
+
     return (
         <>
             <h1>To-Do List</h1>
@@ -40,7 +50,7 @@ export function App() {
             </form>
         
             <ul>
-                {tasks.map(task => (
+                {filteredTasks.map(task => (
                     <li key={task.id}>
                         <label>
                             <input type="checkbox" checked={task.checked} onChange={() => toggleTask(task.id)} />
@@ -50,7 +60,7 @@ export function App() {
                 ))}
             </ul>
 
-            <Summary tasks={tasks} />
+            <Summary tasks={tasks} onFilterChange={setFilter} />
         </>
     );
 }

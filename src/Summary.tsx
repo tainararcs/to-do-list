@@ -1,18 +1,30 @@
 import { Task } from "./Task";
 
-interface SummaryProps {
-    tasks: Task[];
-}
+type Filter = "all" | "completed" | "pending";
 
-export function Summary({ tasks }: SummaryProps) {
-    const numberCheckedTasks = tasks.filter(task => task.checked ).length;
-    const numberUncheckedTasks = tasks.length - numberCheckedTasks;
+type SummaryProps = {
+    tasks: Task[];
+    onFilterChange: (filter: Filter) => void;
+};
+
+export function Summary({ tasks, onFilterChange }: SummaryProps) {
+
+    const completedTasks = tasks.filter(task => task.checked).length;
+    const pendingTasks = tasks.filter(task => !task.checked).length;
 
     return (
-        <>
-            <p>Tarefas concluídas: {numberCheckedTasks}</p>
-            <p>Tarefas pendentes: {numberUncheckedTasks}</p>
-            <p>Total de tarefas: {tasks.length}</p>
-        </>
-    )
+        <div>
+            <p onClick={() => onFilterChange("completed")}>
+                Tarefas concluídas: {completedTasks}
+            </p>
+
+            <p onClick={() => onFilterChange("pending")}>
+                Tarefas pendentes: {pendingTasks}
+            </p>
+
+            <p onClick={() => onFilterChange("all")}>
+                Todas as tarefas: {tasks.length}
+            </p>
+        </div>
+    );
 }
