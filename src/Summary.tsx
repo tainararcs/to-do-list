@@ -13,7 +13,7 @@ export function Summary({ tasks, onFilterChange }: SummaryProps) {
     const pendingTasks = tasks.filter(task => !task.checked).length;
 
     return (
-        <div>
+        <div className="summary">
             <p onClick={() => onFilterChange("completed")}>
                 Tarefas concluídas: {completedTasks}
             </p>

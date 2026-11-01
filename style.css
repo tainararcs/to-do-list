@@ -233,31 +233,29 @@ button, input {
 }
 
 /* Resumo */
-#root > p {
-    padding: 0.95rem 1.25rem;
-    border-radius: 20px;
-    background: var(--convex);
-    box-shadow: var(--raised-sm);
+.summary {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border-radius: 28px;
+}
+
+.summary > p {
+    padding: 1.25rem;
+    border-radius: 28px;
     color: var(--title);
     font-weight: 700;
     text-align: center;
-}
-
-.summary {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.25rem;
-    border-radius: 28px;
+    cursor: pointer;
+    transition: transform var(--ease), box-shadow var(--ease);    
     background: var(--convex);
     box-shadow: var(--raised);
 }
 
-.summary > p {
-    padding: 0;
-    background: none;
-    box-shadow: none;
-    text-align: left;
+.summary > p:hover {
+    transform: translateY(-2px);
 }
 
 /* Menu flutuante */
