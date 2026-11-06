@@ -61,7 +61,7 @@ button, input {
     flex-direction: column;
     gap: 1.25rem;
     width: 100%;
-    max-width: 560px;
+    max-width: 700px;
     height: auto;     /* cresce junto com o conteúdo */
     min-height: 100vh;
     margin: 0 auto;
