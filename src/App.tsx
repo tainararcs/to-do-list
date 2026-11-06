@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Task, createTask } from "./Task";
 import type { SyntheticEvent } from "react";
+import { Task, createTask } from "./Task";
 import { Summary } from "./Summary";
+import { getLocation, copyText, shareText } from "./service/app";
 
 const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]") as Task[];;
 
@@ -14,13 +15,15 @@ export function App() {
 
     useEffect(() => {localStorage.setItem("tasks", JSON.stringify(tasks))}, [tasks]);
 
-    function addTask(e: SyntheticEvent<HTMLFormElement>) {
+    async function addTask(e: SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
         
         const text = inputTask.trim();
         if (!text) return;
 
-        setTasks(prevTasks => [...prevTasks, createTask(text)]);
+        const location = await getLocation();
+
+        setTasks(prevTasks => [...prevTasks, createTask(text, location)]);
         setInputTask("");
     }
 
@@ -46,7 +49,7 @@ export function App() {
 
             <form onSubmit={addTask}>
                 <input type="text" placeholder="Crie uma task" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
-                <button type="submit">Adicionar</button>
+                <button title="Adicionar tarefa" type="submit">Adicionar</button>
             </form>
         
             <ul>
@@ -55,6 +58,11 @@ export function App() {
                         <label>
                             <input type="checkbox" checked={task.checked} onChange={() => toggleTask(task.id)} />
                             <span>{task.text}</span>
+                            <div>
+                                <button title="Copiar tarefa" type="button" onClick={() => copyText(task.text)}>📋</button>
+                                <button title="Compartilhar tarefa" type="button" onClick={() => shareText(task.text)}>📤</button>
+                            </div>
+                            <div>{task.location}</div>
                         </label>
                     </li>
                 ))}
