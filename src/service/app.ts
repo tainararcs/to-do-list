@@ -32,7 +32,7 @@ export async function copyText(text: string): Promise<string> {
 export async function shareText(text: string): Promise<string> {
     try {
         await navigator.share({text});
-        return "Compartilhado com sucesso!";
+        return "Compartilhando...";
 
     } catch (error) {
         console.error(error);
