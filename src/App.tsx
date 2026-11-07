@@ -105,7 +105,7 @@ export function App() {
             {status && (<span className="status" role="status" aria-live="polite">{status}</span>            )}
 
             <form onSubmit={addTask}>
-                <input name="task" type="text" placeholder="Crie uma task" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
+                <input name="task" type="text" placeholder="Crie uma tarefa" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
                 <button title="Adicionar tarefa" type="submit">Adicionar</button>
             </form>
         
