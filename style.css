@@ -433,36 +433,6 @@ button, input {
     stroke-linejoin: round;
 }
 
-@media (min-width: 600px) {
-    body {
-        display: flex;
-        align-items: flex-start; 
-        justify-content: center;
-        padding: 2.5rem 1rem;
-        background: var(--page);
-    }
-
-    #root {
-        min-height: calc(100vh - 5rem);
-        padding: 3rem 2.5rem 8.5rem; /* o menu flutuante sobre o fim do cartão */
-        border-radius: 44px;
-        /* sombra escura embaixo/direita, realce branco curto e discreto em cima/esquerda */
-        box-shadow:
-            16px 16px 36px rgba(129, 149, 204, 0.45),
-            -8px -8px 20px rgba(255, 255, 255, 0.75);
-    }
-
-    #root > h1 {
-        font-size: 2rem;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    * {
-        transition: none !important;
-    }
-}
-
 .status {
     position: fixed;
     left: 50%;
@@ -496,5 +466,39 @@ button, input {
     to {
         opacity: 1;
         translate: 0 0;
+    }
+}
+
+@media (min-width: 600px) {
+    body {
+        display: flex;
+        align-items: flex-start; 
+        justify-content: center;
+        padding: 2.5rem 1rem;
+        background: var(--page);
+    }
+
+    #root {
+        min-height: calc(100vh - 5rem);
+        padding: 3rem 2.5rem 8.5rem; /* o menu flutuante sobre o fim do cartão */
+        border-radius: 44px;
+        /* sombra escura embaixo/direita, realce branco curto e discreto em cima/esquerda */
+        box-shadow:
+            16px 16px 36px rgba(129, 149, 204, 0.45),
+            -8px -8px 20px rgba(255, 255, 255, 0.75);
+    }
+
+    #root > h1 {
+        font-size: 2rem;
+    }
+
+    .task-location {
+        font-size: 0.4rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
     }
 }
