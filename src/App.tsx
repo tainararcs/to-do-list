@@ -31,20 +31,29 @@ export function App() {
     }, []);
 
     // Adiciona uma nova tarefa
+        
     async function addTask(e: SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
 
         const text = inputTask.trim();
         if (!text) return;
 
-        const location = await getLocation();
+        // Cria a tarefa imediatamente
+        const newTask = createTask(text, "--");
 
-        setTasks(prevTasks => [
-            ...prevTasks,
-            createTask(text, location)
-        ]);
-
+        setTasks(prevTasks => [...prevTasks, newTask]);
         setInputTask("");
+
+        // Obtém a localização separadamente
+        try {
+            const location = await getLocation();
+
+            setTasks(prevTasks =>
+                prevTasks.map(task => task.id === newTask.id ? { ...task, location } : task)
+            );
+        } catch (error) {
+            console.error("Erro ao atualizar localização:", error);
+        }
     }
 
     // Alterna o estado de conclusão da tarefa
@@ -96,7 +105,7 @@ export function App() {
             {status && (<span className="status" role="status" aria-live="polite">{status}</span>            )}
 
             <form onSubmit={addTask}>
-                <input type="text" placeholder="Crie uma task" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
+                <input name="task" type="text" placeholder="Crie uma task" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
                 <button title="Adicionar tarefa" type="submit">Adicionar</button>
             </form>
         
