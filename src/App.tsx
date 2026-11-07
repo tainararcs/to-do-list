@@ -55,14 +55,25 @@ export function App() {
             <ul>
                 {filteredTasks.map(task => (
                     <li key={task.id}>
-                        <label>
+                        <label className="task-content">
                             <input type="checkbox" checked={task.checked} onChange={() => toggleTask(task.id)} />
                             <span>{task.text}</span>
-                            <div>
-                                <button title="Copiar tarefa" type="button" onClick={() => copyText(task.text)}>📋</button>
-                                <button title="Compartilhar tarefa" type="button" onClick={() => shareText(task.text)}>📤</button>
+                            <div className="task-actions">
+                                <button title="Copiar tarefa" className="task-action" type="button" onClick={() => copyText(task.text)}>
+                                    <svg className="task-action-icon" viewBox="0 0 24 24">
+                                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 0 2 2"/>
+                                    </svg>
+                                </button>
+                                <button title="Compartilhar tarefa" className="task-action" type="button" onClick={() => shareText(task.text)}>
+                                    <svg className="task-action-icon" viewBox="0 0 24 24">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                        <polyline points="16 6 12 2 8 6"/>
+                                        <line x1="12" x2="12" y1="2" y2="15"/>
+                                    </svg>
+                                </button>
                             </div>
-                            <div>{task.location}</div>
+                            <div className="task-location">{task.location}</div>
                         </label>
                     </li>
                 ))}
