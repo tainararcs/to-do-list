@@ -51,9 +51,7 @@ export function App() {
     const toggleTask = (id: string) => {
         setTasks(prevTasks =>
             prevTasks.map(task =>
-                task.id === id
-                    ? { ...task, checked: !task.checked }
-                    : task
+                task.id === id  ? { ...task, checked: !task.checked } : task
             )
         );
     };
@@ -70,9 +68,8 @@ export function App() {
     const showStatus = (message: string) => {
         setStatus(message);
 
-        if (statusTimeout.current) {
+        if (statusTimeout.current) 
             clearTimeout(statusTimeout.current);
-        }
 
         statusTimeout.current = setTimeout(() => {
             setStatus("");
