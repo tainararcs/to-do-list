@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import type { SyntheticEvent } from "react";
 import { Task, createTask } from "./Task";
@@ -15,7 +14,31 @@ export function App() {
     const [filter, setFilter] = useState<Filter>("all");
     const [status, setStatus] = useState("");
 
+    // Novo estado para controlar se está online ou offline
+    const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+
     const statusTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Monitora mudanças na conexão com a internet (CORRIGIDO)
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            showStatus('Você está online');
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            showStatus('Você está offline');
+        };
+
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
 
     // Salva as tarefas no localStorage sempre que houver alterações
     useEffect(() => {
@@ -31,7 +54,6 @@ export function App() {
     }, []);
 
     // Adiciona uma nova tarefa
-        
     async function addTask(e: SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -44,15 +66,17 @@ export function App() {
         setTasks(prevTasks => [...prevTasks, newTask]);
         setInputTask("");
 
-        // Obtém a localização separadamente
-        try {
-            const location = await getLocation();
+        // Só tenta buscar a localização se estiver online
+        if (isOnline) {
+            try {
+                const location = await getLocation();
 
-            setTasks(prevTasks =>
-                prevTasks.map(task => task.id === newTask.id ? { ...task, location } : task)
-            );
-        } catch (error) {
-            console.error("Erro ao atualizar localização:", error);
+                setTasks(prevTasks =>
+                    prevTasks.map(task => task.id === newTask.id ? { ...task, location } : task)
+                );
+            } catch (error) {
+                console.error("Erro ao atualizar localização:", error);
+            }
         }
     }
 
@@ -102,7 +126,18 @@ export function App() {
         <>
             <h1>To-Do List</h1>
 
-            {status && (<span className="status" role="status" aria-live="polite">{status}</span>            )}
+            {/* Indicador visual fixo de Conexão */}
+            <div className="connection-indicator">
+                Status: <span style={{ color: isOnline ? 'green' : 'red' }}>
+                {isOnline ? 'Online' : 'Offline'}
+                </span>
+            </div>
+
+            {status && (
+                <span className="status" role="status" aria-live="polite">
+                {status}
+                </span>
+            )}
 
             <form onSubmit={addTask}>
                 <input name="task" type="text" placeholder="Crie uma tarefa" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
